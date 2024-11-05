@@ -1,7 +1,12 @@
+package App;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import Entities.Cliente;
+import Entities.Deposito;
+import Entities.Item;
 
 public class Gerenciador {
     private List<Deposito> depositos;
@@ -39,6 +44,13 @@ public class Gerenciador {
 
     // consultar itens armazenados
     public void consultarItensArmazenados() {
+        System.out.println("Itens armazenados:");
+        for (Item item : itensPendentes) {
+            System.out.println(item);
+        }
+        /*
+         * 
+         */
     }
 
     // alterar situação de um item
@@ -50,8 +62,7 @@ public class Gerenciador {
     }
 
     // organizar itens para armazenamento 
-    public void organizarItens(){
-    }
+    // nao precisa de metodo com interação: sort 
 
     // salvar dados em um arquivo e mostrar erro 
     // implementar na classe App 

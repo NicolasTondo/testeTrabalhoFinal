@@ -1,3 +1,8 @@
+
+package Entities;
+
+import Enum.Situacao;
+
 public class Item {
     private String codigo;
     private String descricao;

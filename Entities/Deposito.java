@@ -1,3 +1,4 @@
+package Entities;
 public class Deposito {
     private int codigo;
     private String nome;

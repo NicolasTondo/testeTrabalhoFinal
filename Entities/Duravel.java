@@ -1,3 +1,4 @@
+package Entities;
 public class Duravel implements Categoria {
     private String setor;
     private String materialPrincipal;

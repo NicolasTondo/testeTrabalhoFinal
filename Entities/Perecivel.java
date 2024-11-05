@@ -1,3 +1,4 @@
+package Entities;
 public class Perecivel implements Categoria {
     private String origem;
     private int tempoMaximoValidade;
