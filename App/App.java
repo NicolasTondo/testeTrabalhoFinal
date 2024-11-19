@@ -38,7 +38,7 @@ public class App {
                 case 5 -> alterarSituacaoItem();
                 case 6 -> gerenciador.carregarDados();
                 case 7 -> gerenciador.organizarItensParaArmazenamento();
-                case 8 -> gerenciador.salvarDados();
+                case 8 -> gerenciador.escreverDados();
                 case 9 -> gerenciador.carregarDadosSalvos();
                 case 0 -> gerenciador.finalizarSistema();
                 default -> System.out.println("Opção inválida");

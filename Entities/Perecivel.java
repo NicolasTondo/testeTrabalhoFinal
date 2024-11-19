@@ -27,7 +27,7 @@ public class Perecivel implements Categoria {
     @Override
     public String getDescricao() {
         return 
-        "ITEM PERECÍVEL" + 
+        "\nINFORMAÇÕES DO ITEM PERECÍVEL" + 
             "\nOrigem: " + origem + 
             "\nValidade: " + tempoMaximoValidade + "dias.";
     }

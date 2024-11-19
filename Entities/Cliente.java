@@ -37,7 +37,7 @@ public class Cliente {
     @Override
     public String toString() {
         return 
-        "INFORMAÇÕES DO CLIENTE" +
+        "\nINFORMAÇÕES DO CLIENTE" +
             "\nCodigo: " + codigo +
             "\nNome: " + nome +
             "\nTelefone: " + telefone;

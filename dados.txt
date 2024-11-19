@@ -1,0 +1,11 @@
+Depósitos:
+DEPOSITO
+Codigo: 1
+Nome: 1
+Cidade: 1
+Endereco: 1
+Capacidade Maxima: 1.0
+
+Clientes:
+
+Itens Pendentes:

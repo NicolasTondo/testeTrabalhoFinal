@@ -64,24 +64,21 @@ public class Deposito {
         return itensArmazenados;
     }
 
-    // Método para alocar um item no depósito
     public void alocarItem(Item item) {
-        // Verifica se o depósito tem capacidade suficiente para o item
         if (getCapacidadeMaxima() >= item.getVolume()) {
-            itensArmazenados.add(item);  // Aloca o item no depósito
+            itensArmazenados.add(item);  
             System.out.println("Item " + item.getCodigo() + " alocado com sucesso no depósito " + this.nome);
         } else {
             System.out.println("Erro: Capacidade insuficiente no depósito para o item " + item.getCodigo());
         }
     }
 
-    // Método para consultar os itens armazenados no depósito
     public void consultarItensArmazenados() {
         if (itensArmazenados.isEmpty()) {
             System.out.println("Não há itens armazenados neste depósito.");
         } else {
             for (Item item : itensArmazenados) {
-                System.out.println(item); // Aqui deve imprimir a representação do item (toString)
+                System.out.println(item); 
             }
         }
     }
@@ -89,7 +86,7 @@ public class Deposito {
     @Override
     public String toString() {
         return 
-        "DEPOSITO" +
+        "\nINFORMAÇÕES DO DEPOSITO" +
             "\nCodigo: " + codigo +
             "\nNome: " + nome +
             "\nCidade: " + cidade +
