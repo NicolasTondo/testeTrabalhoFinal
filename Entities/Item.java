@@ -2,7 +2,7 @@ package Entities;
 
 import Enum.Situacao;
 
-public class Item {
+public class Item implements Categoria{
     private String codigo;
     private String descricao;
     private double volume;

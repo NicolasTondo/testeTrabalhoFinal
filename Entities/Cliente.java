@@ -1,4 +1,7 @@
 package Entities;
+
+//import java.util.Random;
+
 public class Cliente {
     private int codigo;
     private String nome;
@@ -33,6 +36,8 @@ public class Cliente {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+
+
 
     @Override
     public String toString() {

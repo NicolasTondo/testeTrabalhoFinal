@@ -49,6 +49,10 @@ public class Gerenciador {
         }
     }
 
+
+
+    // USANDO A SITUAÇÃO 
+
     public void consultarItensArmazenados() {
         try {
             for (Item item : itensPendentes) {
@@ -60,6 +64,8 @@ public class Gerenciador {
             System.out.println("Erro ao consultar itens: " + e.getMessage());
         }
     }
+
+    // USANDO A SITUAÇÃO 
 
     public void alterarSituacaoItem(String codigo, Situacao novaSituacao) {
         try {
@@ -86,6 +92,8 @@ public class Gerenciador {
             System.out.println("Erro ao carregar dados: " + e.getMessage());
         }
     }
+
+    // USANDO A SITUAÇÃO DO PEDIDO 
 
     public void organizarItensParaArmazenamento() {
         try {

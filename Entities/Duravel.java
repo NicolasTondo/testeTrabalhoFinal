@@ -1,9 +1,13 @@
 package Entities;
-public class Duravel implements Categoria {
+
+import Enum.Situacao;
+
+public class Duravel extends Item {
     private String setor;
     private String materialPrincipal;
 
-    public Duravel(String setor, String materialPrincipal) {
+    public Duravel(String setor, String materialPrincipal, String codigo, String descricao, double volume, double valorDeclarado, Situacao situacao) {
+        super(codigo, descricao, volume, valorDeclarado, situacao);
         this.setor = setor;
         this.materialPrincipal = materialPrincipal;
     }
@@ -24,8 +28,12 @@ public class Duravel implements Categoria {
         this.materialPrincipal = materialPrincipal;
     }
 
+    public String getCategoria() {
+        return "Durável";
+    }
+
     @Override
-    public String getDescricao() {
+    public String toString() {
         return 
         "\nINFORMAÇÕES DO ITEM DURÁVEL" + 
             "\nSetor: " + setor + 
